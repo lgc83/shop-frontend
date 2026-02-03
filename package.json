@@ -9,11 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1",
+    "axios": "^1.13.4",
     "bootstrap": "^5.3.8",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-bootstrap": "^2.10.10",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "styled": "^1.0.0",
+    "styled-components": "^6.3.8",
+    "styles": "^0.2.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

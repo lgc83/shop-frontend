@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap"; // 수정: 버튼을 제거했으므로 Button은 필요없음
 import { useRouter } from "next/navigation";
 
 import Header from "@/include/Header";
@@ -40,17 +40,6 @@ export default function Home() {
       setProducts(data);
     } catch (err) {
       console.error("상품 로딩 실패", err);
-    }
-  };
-
-  // 삭제 처리
-  const handleDelete = async (id: number) => {
-    if (!confirm("삭제할까요?")) return;
-    try {
-      await fetch(`${API_BASE}/products/${id}`, { method: "DELETE" });
-      fetchProducts();
-    } catch (err) {
-      console.error("삭제 실패", err);
     }
   };
 
@@ -108,7 +97,7 @@ export default function Home() {
               key={p.id}
               className="border p-3 d-flex flex-column justify-content-between"
               style={{ width: 200, height: 320, cursor: "pointer" }}
-              onClick={() => openModal("view", p.id)}
+              onClick={() => openModal("view", p.id)} // 클릭 시 뷰 모드로 모달 열기
             >
               {p.imageUrl && (
                 <img
@@ -125,26 +114,6 @@ export default function Home() {
                 <p style={{ fontWeight: "bold", marginBottom: 0 }}>
                   {p.price.toLocaleString()}원
                 </p>
-              </div>
-
-              <div
-                className="d-flex gap-2 mt-3"
-                onClick={e => e.stopPropagation()} // 버튼 클릭 시 카드 클릭 이벤트 차단
-              >
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() => openModal("edit", p.id)}
-                >
-                  수정
-                </Button>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => handleDelete(p.id)}
-                >
-                  삭제
-                </Button>
               </div>
             </div>
           ))}

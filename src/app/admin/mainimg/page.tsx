@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 import SideBar from "../include/SideBar";
+import AdminHeader from "../include/AdminHeader";
 
 import {
   PageWrapper,
@@ -98,6 +99,7 @@ async function apiMainBannerUpdate(payload: {
 // -------------------------
 export default function BannerPage() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // ✅ 현재 배너(항상 1개)
   const [banner, setBanner] = useState<MainBanner | null>(null);
@@ -197,9 +199,14 @@ export default function BannerPage() {
   // -------------------------
   return (
     <PageWrapper>
-      <SideBar />
+      <SideBar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <MainContentWrapper>
+        <AdminHeader
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          onToggleSidebar={() => setSidebarOpen((v) => !v)}
+        />
         <Content>
           <H1>메인 배너 관리 (이미지 + 링크 / 항상 1개)</H1>
 

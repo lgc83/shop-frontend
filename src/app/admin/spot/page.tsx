@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 import SideBar from "../include/SideBar";
+import AdminHeader from "../include/AdminHeader";
 
 import {
   PageWrapper,
@@ -98,6 +99,7 @@ async function apiSpotDelete(id: number): Promise<void> {
 // -------------------------
 export default function SpotItemAdminPage() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [list, setList] = useState<SpotItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -199,9 +201,14 @@ export default function SpotItemAdminPage() {
   // -------------------------
   return (
     <PageWrapper>
-      <SideBar />
+      <SideBar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <MainContentWrapper>
+        <AdminHeader
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          onToggleSidebar={() => setSidebarOpen((v) => !v)}
+        />
         <Content>
           <H1>SPOT 아이콘 관리</H1>
 

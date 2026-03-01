@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useRouter } from "next/navigation";
-import Header from "@/include/Header";
+import AdminHeader from "../include/AdminHeader";
 import ProductModal from "@/modal/ProductModal";
 import {
   PageWrapper,
@@ -75,6 +75,7 @@ export default function Category() {
   const [modalMode, setModalMode] = useState<"create" | "edit" | "view">("create");
   const [currentProductId, setCurrentProductId] = useState<number | undefined>(undefined);
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const fetchCategories = () => {
     setCategoryList(loadCategoriesLS());
@@ -149,12 +150,12 @@ export default function Category() {
   return (
     <>
       <PageWrapper>
-        <SideBar />
+        <SideBar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <MainContentWrapper>
-          <Header
-            onOpenModal={() => openModal("create")}
+          <AdminHeader
             isLogin={isLogin}
             setIsLogin={setIsLogin}
+            onToggleSidebar={() => setSidebarOpen((v) => !v)}
           />
 
           <Content>

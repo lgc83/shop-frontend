@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 import SideBar from "../include/SideBar";
+import AdminHeader from "../include/AdminHeader";
 
 import {
   PageWrapper,
@@ -101,6 +102,7 @@ async function apiBannerDelete(id: number): Promise<void> {
 // -------------------------
 export default function BannerPage() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // ✅ 배너 리스트
   const [bannerList, setBannerList] = useState<BannerItem[]>([]);
@@ -210,9 +212,14 @@ export default function BannerPage() {
   return (
     <>
       <PageWrapper>
-        <SideBar />
+        <SideBar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <MainContentWrapper>
+          <AdminHeader
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+            onToggleSidebar={() => setSidebarOpen((v) => !v)}
+          />
           <Content>
             <H1>배너 관리 (DB 연동)</H1>
 

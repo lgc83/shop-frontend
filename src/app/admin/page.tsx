@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "react-bootstrap";
-import Header from "@/include/Header";
+import AdminHeader from "./include/AdminHeader";
 import ProductModal from "@/modal/ProductModal";
 import {
   PageWrapper,
@@ -55,6 +55,7 @@ export default function Admin() {
     useState<number | undefined>(undefined);
 
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const searchParams = useSearchParams();
   const onOpenModal = () => openModal("create");
 
@@ -167,13 +168,13 @@ export default function Admin() {
 
   return (
     <PageWrapper>
-      <SideBar />
+      <SideBar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <MainContentWrapper>
-        <Header
-          onOpenModal={() => openModal("create")}
+        <AdminHeader
           isLogin={isLogin}
           setIsLogin={setIsLogin}
+          onToggleSidebar={() => setSidebarOpen((v) => !v)}
         />
 
         <Content>

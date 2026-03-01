@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 import SideBar from "../include/SideBar";
+import AdminHeader from "../include/AdminHeader";
 
 import {
   PageWrapper,
@@ -130,6 +131,7 @@ async function apiMainVideoUpdate(payload: {
 // -------------------------
 export default function MainVideoAdminPage() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // ✅ 변경: 현재 비디오(항상 1개)
   const [videoData, setVideoData] = useState<MainVideo | null>(null);
@@ -270,9 +272,14 @@ export default function MainVideoAdminPage() {
   // -------------------------
   return (
     <PageWrapper>
-      <SideBar />
+      <SideBar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <MainContentWrapper>
+        <AdminHeader
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          onToggleSidebar={() => setSidebarOpen((v) => !v)}
+        />
         <Content>
           {/* ✅ 변경: 타이틀 */}
           <H1>메인 비디오 관리 (영상 + 텍스트 + 버튼2 / 항상 1개)</H1>

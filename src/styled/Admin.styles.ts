@@ -1,6 +1,39 @@
 import styled from "styled-components";
 import Link from "next/link";
 
+/* 관리자 상단바 */
+export const AdminHeaderBar = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  gap: 16px;
+`;
+
+export const AdminHeaderBrand = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1f2937;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+
+  &:hover {
+    color: #374151;
+  }
+`;
+
+export const AdminHeaderActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+`;
+
 /* 사이드바 컨테이너 - 헤더(1055)보다 낮게 해서 메가메뉴가 위에 표시 */
 export const Sidebar = styled.aside<{ $open?: boolean }>`
   width: 260px;

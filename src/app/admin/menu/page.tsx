@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import Header from "@/include/Header";
+import AdminHeader from "../include/AdminHeader";
 import SideBar from "../include/SideBar";
 import {
   PageWrapper,
@@ -215,8 +215,7 @@ export default function NavMenuPage() {
       <SideBar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <MainContentWrapper>
-        <Header
-          onOpenModal={() => {}}
+        <AdminHeader
           isLogin={isLogin}
           setIsLogin={setIsLogin}
           onToggleSidebar={() => setSidebarOpen((v) => !v)}

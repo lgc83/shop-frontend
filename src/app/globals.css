@@ -69,6 +69,11 @@ body {
   }
 }
 
+/* 관리자 화면: 고정 헤더 없음 → 상단 여백 제거 */
+body.admin-page {
+  padding-top: 0 !important;
+}
+
 /* ===== Top header polish ===== */
 .site-header .navbar-brand {
   font-weight: 900;
@@ -115,6 +120,34 @@ body {
 
   width: 22px;
   height: 18px;
+}
+
+/* 관리자 헤더 햄버거 */
+.admin-header__burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.admin-header__burger:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+.admin-header__burger .burger-bar {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  background-color: #1f2937;
+  border-radius: 2px;
+}
+@media (min-width: 992px) {
+  .admin-header__burger {
+    display: none;
+  }
 }
 
 /* 햄버거 줄 */

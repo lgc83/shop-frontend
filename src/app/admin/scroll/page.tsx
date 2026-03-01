@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 import SideBar from "../include/SideBar";
+import AdminHeader from "../include/AdminHeader";
 
 import {
   PageWrapper,
@@ -108,6 +109,7 @@ async function apiScrollBannerDelete(id: number): Promise<void> {
 // -------------------------
 export default function ScrollBannerAdminPage() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [list, setList] = useState<ScrollBannerItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -215,9 +217,14 @@ export default function ScrollBannerAdminPage() {
   // -------------------------
   return (
     <PageWrapper>
-      <SideBar />
+      <SideBar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <MainContentWrapper>
+        <AdminHeader
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          onToggleSidebar={() => setSidebarOpen((v) => !v)}
+        />
         <Content>
           <H1>스크롤 배너 관리</H1>
 

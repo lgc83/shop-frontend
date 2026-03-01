@@ -127,7 +127,7 @@ export const VideoWrap = styled.div`
   video {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 화면 꽉 채우기 */
+    object-fit: cover;
   }
 `;
 

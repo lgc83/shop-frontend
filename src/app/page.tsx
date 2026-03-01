@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Header from "@/include/Header";
 import ProductModal from "@/modal/ProductModal";
 import HeroVideo from "@/components/HeroVideo";
-import MainVideo from "./common/MainVideo";
 import TEXTBanner from "./common/TEXTBanner";
 import ScrollBanner from "./common/ScrollBanner";
 import SpotBanner from "./common/SpotBanner";
@@ -107,7 +106,6 @@ export default function Home() {
       </div>
 
       <TEXTBanner />
-      <MainVideo />
       <ScrollBanner />
       <MESProductionSection />
       <SpotBanner />

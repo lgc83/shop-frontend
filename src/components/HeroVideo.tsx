@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-const MAX_DURATION = 5; // 최대 재생 시간(초) - 이 시간 후 다음 영상으로 넘김
-const FADE_DURATION = 1200; // 전환 페이드 시간(ms)
+const MAX_DURATION = 3; // 최대 재생 시간(초) - 이 시간 후 다음 영상으로 넘김
+const FADE_DURATION = 600; // 전환 페이드 시간(ms)
 
 export default function HeroVideo() {
   const videos = [

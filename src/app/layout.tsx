@@ -11,9 +11,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
         />
       </head>
-      <body>
-        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-          <main style={{ flex: 1 }}>{children}</main>
+      <body style={{ overflow: "visible" }}>
+        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", overflow: "visible" }}>
+          <main style={{ flex: 1, overflow: "visible" }}>{children}</main>
           <Footer />
         </div>
       </body>

@@ -6,17 +6,15 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 24px;
-  background: radial-gradient(1200px 600px at 20% 10%, #eef2ff 0%, rgba(238, 242, 255, 0) 55%),
-    radial-gradient(900px 500px at 80% 20%, #e0f2fe 0%, rgba(224, 242, 254, 0) 55%),
-    #f8f9fc;
+  background: #ffffff;
 `;
 export const Card = styled.div`
   width: 100%;
   max-width: 420px;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   overflow: hidden;
 `;
 export const LeftImage = styled.div`
@@ -39,12 +37,19 @@ export const Right = styled.div`
   padding: 40px 36px;
 `;
 
+export const FormRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+`;
+
 export const Label = styled.label`
-  display: block;
+  flex-shrink: 0;
+  min-width: 120px;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #374151;
-  margin-bottom: 6px;
 `;
 
 export const DaonText = styled.div`
@@ -60,17 +65,18 @@ export const FooterLinks = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 
   a {
-    color: #2563eb;
+    color: #6b7280;
     text-decoration: none;
   }
   a:hover {
+    color: #374151;
     text-decoration: underline;
   }
   .sep {
-    color: rgba(15, 23, 42, 0.4);
+    color: rgba(15, 23, 42, 0.3);
   }
 `;
 export const Title = styled.h1`
@@ -92,29 +98,22 @@ export const Form = styled.form`
   width: 100%;
 `;
 export const Input = styled.input`
-  width: 100%;
-  padding: 0.95rem 1.05rem;
-  margin-bottom: 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, 0.7);
-  background: rgba(255, 255, 255, 0.85);
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #fff;
   font-size: 0.95rem;
   color: #0f172a;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease;
 
   &::placeholder {
     color: rgba(15, 23, 42, 0.45);
   }
 
-  &:hover {
-    background: #fff;
-  }
-
   &:focus {
     outline: none;
-    border-color: rgba(59, 130, 246, 0.9);
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.18);
-    background: #fff;
+    border-color: rgba(0, 0, 0, 0.4);
   }
 `;
 export const CheckboxWrapper = styled.div`
@@ -131,18 +130,19 @@ export const CheckboxWrapper = styled.div`
 `;
 export const Button = styled.button`
   width: 100%;
+  margin-top: 8px;
   padding: 0.85rem;
-  border-radius: 999px;
+  border-radius: 6px;
   border: none;
-  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 45%, #7c3aed 100%);
+  background: #1f2937;
   color: #fff;
-  font-weight: 800;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.08s ease, filter 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
+  transition: background 0.15s ease;
 
   &:hover {
-    filter: brightness(1.03);
+    background: #374151;
   }
 
   &:active {
@@ -151,9 +151,7 @@ export const Button = styled.button`
 
   &:disabled {
     cursor: not-allowed;
-    filter: grayscale(0.15);
-    opacity: 0.75;
-    box-shadow: none;
+    opacity: 0.6;
   }
 `;
 export const Divider = styled.hr`

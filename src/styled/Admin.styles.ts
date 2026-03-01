@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-/* 사이드바 컨테이너 */
+/* 사이드바 컨테이너 - 헤더(1055)보다 낮게 해서 메가메뉴가 위에 표시 */
 export const Sidebar = styled.aside<{ $open?: boolean }>`
   width: 260px;
   min-width: 260px;
@@ -13,7 +13,7 @@ export const Sidebar = styled.aside<{ $open?: boolean }>`
   top: 0;
   left: 0;
   bottom: 0;
-  z-index: 1040;
+  z-index: 1020;
   transition: transform 0.25s ease;
   overflow-y: auto;
   padding-bottom: 24px;
@@ -47,6 +47,9 @@ export const SidebarTopRow = styled.div`
 `;
 
 export const SidebarBrand = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 1.1rem;
   font-weight: 800;
   color: #fff;
@@ -55,6 +58,10 @@ export const SidebarBrand = styled(Link)`
 
   &:hover {
     color: rgba(255, 255, 255, 0.9);
+  }
+
+  img {
+    flex-shrink: 0;
   }
 `;
 
@@ -160,6 +167,7 @@ export const SidebarBadge = styled.span`
 export const PageWrapper = styled.div`
   display: flex;
   min-height: 100vh;
+  overflow: visible;
 `;
 
 export const MainContentWrapper = styled.main`
@@ -167,6 +175,7 @@ export const MainContentWrapper = styled.main`
   margin-left: 260px;
   background-color: #f4f6f9;
   padding: 20px;
+  overflow: visible; /* 메가메뉴 호버 시 잘림 방지 */
 
   @media (max-width: 991px) {
     margin-left: 0;

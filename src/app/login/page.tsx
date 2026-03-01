@@ -146,21 +146,27 @@ export default function Login() {
           <S.Title>로그인</S.Title>
 
           <S.Form onSubmit={handleSubmit}>
-            <S.Label>아이디(이메일)</S.Label>
-            <S.Input
-              type="email"
-              placeholder="이메일을 입력하세요"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <S.FormRow>
+              <S.Label htmlFor="email">아이디(이메일)</S.Label>
+              <S.Input
+                id="email"
+                type="email"
+                placeholder="이메일을 입력하세요"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </S.FormRow>
 
-            <S.Label>비밀번호</S.Label>
-            <S.Input
-              type="password"
-              placeholder="비밀번호를 입력하세요"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <S.FormRow>
+              <S.Label htmlFor="password">비밀번호</S.Label>
+              <S.Input
+                id="password"
+                type="password"
+                placeholder="비밀번호를 입력하세요"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </S.FormRow>
 
             <S.Button type="submit">로그인</S.Button>
           </S.Form>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Sidebar,
@@ -28,8 +29,9 @@ export default function SideBar({ open = false, onClose }: Props) {
       <SidebarOverlay $open={open} onClick={onClose} />
       <Sidebar $open={open}>
         <SidebarTopRow>
-          <SidebarBrand href="/admin" onClick={onClose}>
-            Shop Admin
+          <SidebarBrand href="/" onClick={onClose}>
+            <Image src="/img/daon-d.png" alt="DAON" width={24} height={24} />
+            <span>DAON</span>
           </SidebarBrand>
           <SidebarCloseButton type="button" onClick={onClose} aria-label="사이드바 닫기">
             닫기

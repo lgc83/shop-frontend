@@ -1,9 +1,20 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 import Header from "@/include/Header";
+import ProductModal from "@/modal/ProductModal";
+import {
+  PageWrapper,
+  MainContentWrapper,
+  Content,
+  ContentInner,
+  H1,
+  H5,
+  P,
+} from "@/styled/Admin.styles";
+import SideBar from "../include/SideBar";
 
 type Product = {
   id: number;
@@ -23,7 +34,6 @@ type CategoryNode = {
 
 const LS_KEY = "categories";
 
-/** localStorage helpers */
 const loadCategoriesLS = (): CategoryNode[] => {
   if (typeof window === "undefined") return [];
   try {
@@ -57,8 +67,96 @@ export default function Category() {
   const router = useRouter();
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-          {/* ✅ 카테고리 관리 섹션 */}
+  const [categoryList, setCategoryList] = useState<CategoryNode[]>([]);
+  const [primaryName, setPrimaryName] = useState("");
+  const [secondaryName, setSecondaryName] = useState("");
+  const [selectedPrimaryId, setSelectedPrimaryId] = useState<number | "">("");
+  const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState<"create" | "edit" | "view">("create");
+  const [currentProductId, setCurrentProductId] = useState<number | undefined>(undefined);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
+  const fetchCategories = () => {
+    setCategoryList(loadCategoriesLS());
+  };
+
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch("/api/products", { cache: "no-store" });
+      if (res.ok) {
+        const data = await res.json();
+        setProducts(data);
+      }
+    } catch (err) {
+      console.error("상품 로딩 실패", err);
+    }
+  };
+
+  const createPrimary = () => {
+    const name = primaryName.trim();
+    if (!name) return;
+    const cats = loadCategoriesLS();
+    const nextId = nextIdFrom(cats);
+    cats.push({ id: nextId, name, children: [] });
+    saveCategoriesLS(cats);
+    setCategoryList(cats);
+    setPrimaryName("");
+  };
+
+  const createSecondary = () => {
+    const name = secondaryName.trim();
+    if (!name || selectedPrimaryId === "") return;
+    const cats = loadCategoriesLS();
+    const parent = cats.find((c) => c.id === selectedPrimaryId);
+    if (!parent) return;
+    const nextId = nextIdFrom(cats);
+    const children = parent.children ?? [];
+    children.push({ id: nextId, name });
+    parent.children = children;
+    saveCategoriesLS(cats);
+    setCategoryList(cats);
+    setSecondaryName("");
+  };
+
+  const deletePrimary = (id: number) => {
+    if (!confirm("1차 카테고리와 하위 2차 카테고리를 모두 삭제할까요?")) return;
+    const cats = loadCategoriesLS().filter((c) => c.id !== id);
+    saveCategoriesLS(cats);
+    setCategoryList(cats);
+    if (selectedPrimaryId === id) setSelectedPrimaryId("");
+  };
+
+  const deleteSecondary = (primaryId: number, secondaryId: number) => {
+    const cats = loadCategoriesLS();
+    const parent = cats.find((c) => c.id === primaryId);
+    if (!parent) return;
+    parent.children = (parent.children ?? []).filter((c) => c.id !== secondaryId);
+    saveCategoriesLS(cats);
+    setCategoryList(cats);
+  };
+
+  const openModal = (mode: "create" | "edit" | "view", productId?: number) => {
+    setModalMode(mode);
+    setCurrentProductId(productId);
+    setShowModal(true);
+  };
+
+  useEffect(() => {
+    fetchCategories();
+    fetchProducts();
+  }, []);
+
+  return (
+    <>
+      <PageWrapper>
+        <SideBar />
+        <MainContentWrapper>
+          <Header
+            onOpenModal={() => openModal("create")}
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+          />
+
           <Content>
             <H1>카테고리 관리</H1>
 
@@ -180,19 +278,18 @@ export default function Category() {
             </ContentInner>
           </Content>
 
-          
           <ProductModal
             show={showModal}
             onClose={() => setShowModal(false)}
             onSaved={() => {
               setShowModal(false);
               fetchProducts();
-              // 카테고리도 함께 최신화(상품 저장 시 카테고리 변경 가능성)
               fetchCategories();
             }}
             productId={currentProductId}
             mode={modalMode}
-            isLogin={isLogin ?? false}
+            isLogin={isLogin}
+            categoryList={categoryList}
           />
         </MainContentWrapper>
       </PageWrapper>

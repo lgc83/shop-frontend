@@ -72,37 +72,41 @@ export const AddressButton = styled.button`
   }
 `;
 
-/* 회원가입 버튼 */
+/* 회원가입 버튼 - 로그인 버튼과 통일 */
 export const SubmitButton = styled(Button)`
   width: 100%;
   padding: 0.85rem;
-  border-radius: 999px;
+  border-radius: 6px;
   border: none;
-  background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+  background: #1f2937;
   color: #fff;
-  font-weight: 800;
+  font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: filter 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 10px 22px rgba(30, 58, 95, 0.25);
+  transition: background 0.15s ease;
 
   &:hover {
-    filter: brightness(1.05);
+    background: #374151;
     color: #fff;
+  }
+
+  &:active {
+    transform: translateY(1px);
   }
 `;
 
-/* 하단 링크 */
+/* 하단 링크 - 로그인 화면과 통일 */
 export const FooterLinks = styled.div`
   margin-top: 24px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 
   a {
-    color: #2563eb;
+    color: #6b7280;
     text-decoration: none;
   }
   a:hover {
+    color: #374151;
     text-decoration: underline;
   }
 `;

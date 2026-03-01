@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "react-bootstrap";
 import Header from "@/include/Header";
 import ProductModal from "@/modal/ProductModal";
@@ -54,6 +55,7 @@ export default function Admin() {
     useState<number | undefined>(undefined);
 
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const searchParams = useSearchParams();
   const onOpenModal = () => openModal("create");
 
   /* -----------------------------
@@ -142,6 +144,14 @@ export default function Admin() {
     fetchMenus();
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    if (searchParams.get("create") === "1") {
+      setModalMode("create");
+      setCurrentProductId(undefined);
+      setShowModal(true);
+    }
+  }, [searchParams]);
 
   /* -----------------------------
      모달 열기

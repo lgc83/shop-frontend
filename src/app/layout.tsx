@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
-import Footer from "@/include/Footer";
+import LayoutContent from "./LayoutContent";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,10 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body style={{ overflow: "visible" }}>
-        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", overflow: "visible" }}>
-          <main style={{ flex: 1, overflow: "visible" }}>{children}</main>
-          <Footer />
-        </div>
+        <LayoutContent>{children}</LayoutContent>
       </body>
     </html>
   );

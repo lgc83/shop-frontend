@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarBrand,
@@ -13,7 +12,6 @@ import {
   SidebarCloseButton,
   SidebarLinkLeft,
   SidebarLinkLabel,
-  SidebarBadge,
 } from "@/styled/Admin.styles";
 
 type Props = {
@@ -22,8 +20,6 @@ type Props = {
 };
 
 export default function SideBar({ open = false, onClose }: Props) {
-  const pathname = usePathname();
-
   return (
     <>
       <SidebarOverlay $open={open} onClick={onClose} />
@@ -38,79 +34,59 @@ export default function SideBar({ open = false, onClose }: Props) {
           </SidebarCloseButton>
         </SidebarTopRow>
 
-        <SidebarSectionTitle>관리</SidebarSectionTitle>
+        <SidebarSectionTitle>관리자</SidebarSectionTitle>
         <SidebarNav>
           <li>
-            <SidebarLink
-              href="/admin"
-              $active={pathname === "/admin"}
-              onClick={onClose}
-            >
+            <SidebarLink href="/admin" onClick={onClose}>
               <SidebarLinkLeft>
                 <SidebarLinkLabel>대시보드</SidebarLinkLabel>
               </SidebarLinkLeft>
             </SidebarLink>
           </li>
+        </SidebarNav>
+
+        <SidebarSectionTitle>상품 관리</SidebarSectionTitle>
+        <SidebarNav>
           <li>
-            <SidebarLink
-              href="/admin/cate"
-              $active={pathname?.startsWith("/admin/cate")}
-              onClick={onClose}
-            >
+            <SidebarLink href="/admin" onClick={onClose}>
               <SidebarLinkLeft>
-                <SidebarLinkLabel>카테고리 등록</SidebarLinkLabel>
+                <SidebarLinkLabel>상품 목록</SidebarLinkLabel>
               </SidebarLinkLeft>
             </SidebarLink>
           </li>
           <li>
-            <SidebarLink
-              href="/admin/menu"
-              $active={pathname?.startsWith("/admin/menu")}
-              onClick={onClose}
-            >
+            <SidebarLink href="/admin?create=1" onClick={onClose}>
               <SidebarLinkLeft>
-                <SidebarLinkLabel>메뉴 등록</SidebarLinkLabel>
+                <SidebarLinkLabel>상품 등록</SidebarLinkLabel>
               </SidebarLinkLeft>
-              <SidebarBadge>NEW</SidebarBadge>
             </SidebarLink>
           </li>
         </SidebarNav>
 
-        <SidebarSectionTitle>바로가기</SidebarSectionTitle>
+        <SidebarSectionTitle>주문 관리</SidebarSectionTitle>
         <SidebarNav>
           <li>
-            <SidebarLink href="/" $active={pathname === "/"} onClick={onClose}>
+            <SidebarLink href="/admin/orders" onClick={onClose}>
               <SidebarLinkLeft>
-                <SidebarLinkLabel>메인</SidebarLinkLabel>
+                <SidebarLinkLabel>주문 목록</SidebarLinkLabel>
+              </SidebarLinkLeft>
+            </SidebarLink>
+          </li>
+        </SidebarNav>
+
+        <SidebarSectionTitle>관리 바로가기</SidebarSectionTitle>
+        <SidebarNav>
+          <li>
+            <SidebarLink href="/consumer" onClick={onClose}>
+              <SidebarLinkLeft>
+                <SidebarLinkLabel>메인(소비자) 화면</SidebarLinkLabel>
               </SidebarLinkLeft>
             </SidebarLink>
           </li>
           <li>
-            <SidebarLink
-              href="/consumer"
-              $active={pathname?.startsWith("/consumer")}
-              onClick={onClose}
-            >
+            <SidebarLink href="/orders" onClick={onClose}>
               <SidebarLinkLeft>
-                <SidebarLinkLabel>상품(소비자)</SidebarLinkLabel>
-              </SidebarLinkLeft>
-            </SidebarLink>
-          </li>
-          <li>
-            <SidebarLink href="/cart" $active={pathname?.startsWith("/cart")} onClick={onClose}>
-              <SidebarLinkLeft>
-                <SidebarLinkLabel>장바구니</SidebarLinkLabel>
-              </SidebarLinkLeft>
-            </SidebarLink>
-          </li>
-          <li>
-            <SidebarLink
-              href="/orders"
-              $active={pathname?.startsWith("/orders")}
-              onClick={onClose}
-            >
-              <SidebarLinkLeft>
-                <SidebarLinkLabel>주문</SidebarLinkLabel>
+                <SidebarLinkLabel>주문 채널 바로가기</SidebarLinkLabel>
               </SidebarLinkLeft>
             </SidebarLink>
           </li>

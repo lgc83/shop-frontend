@@ -4,8 +4,6 @@ import { useState, useEffect, useMemo } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import styled from "styled-components";
 
-const API_BASE = "/api";
-
 type CategoryNode = {
   id: number;
   name: string;
@@ -34,20 +32,24 @@ type Props = {
   show: boolean;
   onClose: () => void;
   onSaved: () => void;
+  onDeleted?: () => void;
   productId?: number;
   mode?: "create" | "edit" | "view";
   isLogin?: boolean;
   categoryList?: CategoryNode[];
+  apiBase?: string;
 };
 
 export default function ProductModal({
   show,
   onClose,
   onSaved,
+  onDeleted,
   productId,
   mode = "create",
   isLogin,
   categoryList = [],
+  apiBase = "/api",
 }: Props) {
   const [form, setForm] = useState<ProductForm>({
     title: "",
@@ -71,8 +73,32 @@ export default function ProductModal({
   const [category2, setCategory2] = useState<number | null>(null);
 
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const isViewMode = mode === "view";
+
+  // -----------------------------
+  // 삭제
+  // -----------------------------
+  const handleDelete = async () => {
+    if (!confirm("정말 삭제하시겠습니까?")) return;
+    if (!productId || !onDeleted) return;
+
+    setDeleting(true);
+    try {
+      const res = await fetch(`${apiBase}/products/${productId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("삭제 실패");
+      onDeleted();
+      onClose();
+    } catch (err: any) {
+      alert(err?.message || "삭제 중 오류 발생");
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   const unitPrice = useMemo(() => {
     const n = Number(form.price);
@@ -93,7 +119,7 @@ export default function ProductModal({
     if ((mode === "edit" || mode === "view") && productId) {
       (async () => {
         try {
-          const res = await fetch(`${API_BASE}/products/${productId}`, {
+          const res = await fetch(`${apiBase}/products/${productId}`, {
             credentials: "include",
           });
 
@@ -227,8 +253,8 @@ export default function ProductModal({
     try {
       const res = await fetch(
         mode === "create"
-          ? `${API_BASE}/products`
-          : `${API_BASE}/products/${productId}`,
+          ? `${apiBase}/products`
+          : `${apiBase}/products/${productId}`,
         {
           method: mode === "create" ? "POST" : "PUT",
           body: fd,
@@ -467,21 +493,35 @@ export default function ProductModal({
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={onClose} disabled={saving}>
-          닫기
-        </Button>
-
-        {!isViewMode && (
-          <Button variant="primary" onClick={handleSave} disabled={saving}>
-            {saving
-              ? mode === "create"
-                ? "등록 중..."
-                : "수정 중..."
-              : mode === "create"
-              ? "등록"
-              : "수정"}
-          </Button>
-        )}
+        <div className="d-flex justify-content-between w-100">
+          <div>
+            {mode === "edit" && onDeleted && (
+              <Button
+                variant="outline-danger"
+                onClick={handleDelete}
+                disabled={saving || deleting}
+              >
+                {deleting ? "삭제 중..." : "삭제"}
+              </Button>
+            )}
+          </div>
+          <div className="d-flex gap-2">
+            <Button variant="secondary" onClick={onClose} disabled={saving || deleting}>
+              닫기
+            </Button>
+            {!isViewMode && (
+              <Button variant="primary" onClick={handleSave} disabled={saving || deleting}>
+                {saving
+                  ? mode === "create"
+                    ? "등록 중..."
+                    : "수정 중..."
+                  : mode === "create"
+                  ? "등록"
+                  : "수정"}
+              </Button>
+            )}
+          </div>
+        </div>
       </Modal.Footer>
     </Modal>
   );
@@ -495,6 +535,13 @@ const InputRow = styled.div`
   display: flex;
   gap: 8px;
   margin-bottom: 12px;
+  align-items: center;
+
+  button {
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 60px;
+  }
 `;
 
 const SizeWrap = styled.div`

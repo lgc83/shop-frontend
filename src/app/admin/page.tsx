@@ -127,19 +127,6 @@ export default function Admin() {
     return "카테고리 없음";
   };
 
-  /* -----------------------------
-     삭제
-  ----------------------------- */
-  const handleDelete = async (id: number) => {
-    if (!confirm("삭제할까요?")) return;
-    try {
-      await fetch(`${API_BASE}/products/${id}`, { method: "DELETE" });
-      fetchProducts();
-    } catch (err) {
-      console.error("삭제 실패", err);
-    }
-  };
-
   useEffect(() => {
     checkLogin();
     fetchMenus();
@@ -224,17 +211,6 @@ export default function Admin() {
                   >
                     수정
                   </Button>
-
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDelete(p.id);
-                    }}
-                  >
-                    삭제
-                  </Button>
                 </ButtonGroup>
               </ProductCard>
             ))}
@@ -248,10 +224,15 @@ export default function Admin() {
             setShowModal(false);
             fetchProducts();
           }}
+          onDeleted={() => {
+            setShowModal(false);
+            fetchProducts();
+          }}
           productId={currentProductId}
           mode={modalMode}
           isLogin={isLogin}
-          categoryList={menuTree} // ✅ 변경
+          categoryList={menuTree}
+          apiBase={API_BASE}
         />
       </MainContentWrapper>
     </PageWrapper>
